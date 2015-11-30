@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tools</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="jqueryui/css/base/jquery-ui-1.10.4.custom.min.css" />
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="jqueryui/js/jquery-1.10.2.js"></script>
+    <script src="jqueryui/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/require.min.js"></script>
+    <script>
+    $(function() {
+        //
+        $("#tabs").tabs();
+    });
+    </script>
+</head>
+
+<body>
+    <div id="tabs">
+        <ul class="tabs">
+            <li><a href="#tabc_1">Table2Data</a></li>
+            <li><a href="#tabc_2">TableEditor</a></li>
+            <li><a href="#tabc_3">Transfer2Table</a></li>
+            <li><a href="#tabc_4">AutoQuery</a></li>
+        </ul>
+        <div class="panes">
+            <!-- tab1 -->
+            <div id="tabc_1">
+                1.create insert values list.
+            </div>
+            <!-- tab2 -->
+            <div id="tabc_2">
+                2.create html editor, base on table frame.
+            </div>
+            <!-- tab3 -->
+            <div id="tabc_3">
+                3.transfer to table frame html.
+            </div>
+            <!-- tab4 -->
+            <div id="tabc_4">
+                4.auto generate Insert/Update/Delete/Search Stingray component, return VRM file.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
