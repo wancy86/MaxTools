@@ -2,8 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Tower of Hanoi 1.0.0</title>
-    <!-- <script src="jqueryui/js/jquery-1.10.2.js"></script> -->
+    <title>Tower of Hanoi 2.0.0</title>
     <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.js"></script>
     <style>
     table {
@@ -12,8 +11,8 @@
     }
     
     td {
-        width: 30px;
-        height: 20px;
+        width: 15px;
+        height: 10px;
     }
     
     caption {
@@ -31,94 +30,93 @@
                 $(this).append(tr.clone());
             }
         });
-
-        InitCanve();
+        InitCanva();
 
     });
-
-    //inti canva
-    function InitCanve() {
-        polA = [];
-        polB = [];
-        polC = [];
-        polA.name = "poleA";
-        polB.name = "poleB";
-        polC.name = "poleC";
-        polA.pol = "A";
-        polB.pol = "B";
-        polC.pol = "C";
-        var level = $('#level').val();
-        $("td").css("background", "#FFF");  
-        
-        for (var i = 1; i <= level; i++) {
-            polA.push(i * 2 - 1);
-        }
-        Draw(polA);
-        Draw(polB);
-        Draw(polC);
-    }
 
     var polA = [];
     var polB = [];
     var polC = [];
-    polA.name = "poleA";
-    polB.name = "poleB";
-    polC.name = "poleC";
+    var Steps = [];
     polA.pol = "A";
     polB.pol = "B";
     polC.pol = "C";
 
-    function Draw(pol, delay) {        
+    //inti canva
+    function InitCanva() {
+        polA = [];
+        polB = [];
+        polC = [];
+        polA.pol = "A";
+        polB.pol = "B";
+        polC.pol = "C";
+        Steps = [];
+        var level = $('#level').val();
+        $("td").css("background", "#FFF");
 
-        var tb = $('#' + pol.name);
+        for (var i = 1; i <= level; i++) {
+            polA.push(i * 2 - 1);
+        }
+        Draw(polA);
+        $("#step").click();
+    }
+
+    function Step() {
+        if (Steps.length > 0) {
+            var s = Steps.shift();
+            DrawUI(s);
+        } else {
+            clearInterval(window.t);
+        }
+    }
+
+    function Draw(pol) {
+        var tmp = [];
+        tmp.pol = pol.pol;
+        for (var i = 0; i < pol.length; i++) {
+            tmp.push(pol[i]);
+        }
+
+        Steps.push(tmp);
+    }
+
+    function DrawUI(pol) {
+        var tb = $('#pole' + pol.pol);
         var level = pol.length;
         tb.find("td").css("background", "#FFF");
-
-        console.log(tb);
-
         var trs = tb.find("tr:gt(" + (9 - level - 1) + ")");
 
-        console.log(trs);
-        
         for (var i = 0; i < trs.length; i++) {
             var min = 8 - (pol[i] + 1) / 2;
             var max = 8 + (pol[i] + 1) / 2 - 1;
-            // console.log(max);
-            // console.log(min);
             $(trs[i]).find("td:gt(" + min + ")").css("background", "#000");
             $(trs[i]).find("td:gt(" + max + ")").css("background", "#FFF");
         }
-
-        if (delay) Delay(delay);
     }
 
     function MoveHanoi(level, pol_A, pol_B, pol_C) {
-        console.log(level);
         if (level == 1) {
             console.log(pol_A.pol + '-->' + pol_C.pol);
             var m = pol_A.shift();
-            console.log(pol_A);
             pol_C.reverse();
             pol_C.push(m);
             pol_C.reverse();
-            console.log(pol_C);
-            Draw(pol_A,500);
-            Draw(pol_C,500);
+            Draw(pol_A);
+            Draw(pol_C);
         } else {
             MoveHanoi(level - 1, pol_A, pol_C, pol_B);
             MoveHanoi(1, pol_A, pol_B, pol_C);
             MoveHanoi(level - 1, pol_B, pol_A, pol_C);
-
         }
     }
 
     function Play() {
-        InitCanve();
-        console.log(polA);
-        console.log(polB);
-        console.log(polC);
+        InitCanva();
         var level = $('#level').val();
         MoveHanoi(level, polA, polB, polC);
+        window.t = setInterval(function() {
+            $("#step").click();
+        }, 350);
     }
 
     function Delay(minseconds) {
@@ -128,10 +126,9 @@
     </script>
 </head>
 
-<body style="width:2000px;">
+<body>
     Level:
-    <select name="level" id="level" onchange="InitCanve()">
-        <option value="2">2</option>
+    <select name="level" id="level" onchange="InitCanva()">
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
@@ -141,8 +138,9 @@
         <option value="9">9</option>
     </select>
     <button onclick="Play()" class="btn-primary">Play</button>
+    <button id="step" onclick="Step()" class="btn-primary" style="display:none;">Step</button>
     <hr>
-    <div style="width:2000px;">
+    <div>
         <table id="poleA">
             <caption>
                 <h3>Pole A</h3></caption>
