@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.js"></script>
+    <title>Document</title>
+    <script>
+    window.flag=1;
+    function SwitchFocus(obj) {
+        setTimeout(function() {
+            if (flag) {
+                $("#txt").focus();
+            } else {
+                $("#txt").blur();
+            }
+
+            var f = window.flag == 1 ? 0 : 1;   
+            window.flag=f;
+        }, 100);
+    }
+    </script>
+</head>
+
+<body>
+    <textarea name="txt" id="txt" cols="30" rows="10">text</textarea>
+    <button onclick="SwitchFocus(this)">Focus</button>
+</body>
+
+</html>
