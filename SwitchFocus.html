@@ -4,7 +4,7 @@
     <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.js"></script>
     <title>Document</title>
     <script>
-    window.flag=1;
+    window.flag=true;
     function SwitchFocus(obj) {
         setTimeout(function() {
             if (flag) {
@@ -12,9 +12,7 @@
             } else {
                 $("#txt").blur();
             }
-
-            var f = window.flag == 1 ? 0 : 1;   
-            window.flag=f;
+            window.flag=!window.flag;
         });
     }
     </script>
